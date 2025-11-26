@@ -1,17 +1,17 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.16)
 cmake_policy(SET CMP0048 NEW)
 
-project(othsec VERSION "0.0.1")
+project(othsec VERSION "1.0.0")
 
-if(CMAKE_VERSION VERSION_LESS "3.1")
-    if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
-    else()
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-    endif()
-else()
-    set(CMAKE_C_STANDARD 99)
-endif()
+# Set C standard
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+
+# Enable security features
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -fstack-protector-strong -D_FORTIFY_SOURCE=2")
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -O0")
 
 set(LIBWEBSOCKETS_MIN_VERSION 1.7.0)
 set(SOURCE_FILES src/server.c src/http.c src/protocol.c src/utils.c src/sniffer.c)

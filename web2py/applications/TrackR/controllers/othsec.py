@@ -95,14 +95,14 @@ def InsertLocalizedInfoInDB(anobject):
                 lon = 0
                 lat = 0
                 [lon, lat] = LocalizeIpAddress(IPaddr)
-            except Exception, e:
+            except Exception as e:
                 logger.debug('InsertLocalizedInfoInDB->LocalizeIpAddress(IP): Exception - %s' % e)
             else:
                 try:
                     anobject['longitude'] = lon
                     anobject['latitude'] = lat
                     db.ipanalyzed.bulk_insert([anobject])
-                except Exception, e:
+                except Exception as e:
                     logger.debug('InsertLocalizedInfoInDB(IP): Exception - %s' % e)
                     logger.debug('InsertLocalizedInfoInDB(IP): return = ' + str(anobject))
                 else:
@@ -141,14 +141,14 @@ def InsertLocalizedInfoInDBLog(anobject):
                 lon = 0
                 lat = 0
                 [lon, lat] = LocalizeIpAddress(IPaddr)
-            except Exception, e:
+            except Exception as e:
                 logger.debug('InsertLocalizedInfoInDBLog->LocalizeIpAddress(IP): Exception - %s' % e)
             else:
                 try:
                     anobject['longitude'] = lon
                     anobject['latitude'] = lat
                     db.loganalyzed.bulk_insert([anobject])
-                except Exception, e:
+                except Exception as e:
                     logger.debug('InsertLocalizedInfoInDBLog(IP): Exception - %s' % e)
                     logger.debug('InsertLocalizedInfoInDBLog(IP): return = ' + str(anobject))
                 else:
@@ -206,7 +206,7 @@ def parseTCPTcpdump(stringToParse, theUsername):
             theLineDetails = pp.SkipTo(pp.Literal('Flags ['), include=True) + FLAGS + pp.Literal('],') + pp.restOfLine
             resultLineDetails = theLineDetails.parseString(resultLine[5])
             theFLAGS = resultLineDetails[1]
-        except Exception, e:
+        except Exception as e:
             logger.debug('parseTCPTcpdump(stringToParse): Exception - %s' % e)
 
         parseObjectOTHSEC = { 'body_message': theRest, 'flags': str(theFLAGS),'addr_from': theIPFrom, 'port_from': thePortFrom, 'addr_to': theIPTo, 'port_to': thePortTo, 'protocol': theProtocol, 'datetime_remote': theDateTime, 'datetime_othsec': datetime.datetime.now().strftime('%Y-%m-%d %X'), 'username': str(theUsername)  }
@@ -360,7 +360,7 @@ def parseTCPSnif(stringToParse, theUsername):
         else:
             return;
 
-    except Exception, e:
+    except Exception as e:
         logger.debug('parseTCPSnif(stringToParse): Exception - %s' % e)
 
     else:
@@ -390,7 +390,7 @@ def parseTCPTail(stringToParse, theUsername):
 
         try:
             resultLine1 = theLine1.parseString(stringToParse)
-        except Exception, e:
+        except Exception as e:
             logger.debug('parseTCPTail(stringToParse): Exception - %s' % e)
         else:
             logger.debug('parseTCPTail() match rule 1 - authentication failure ')
@@ -402,7 +402,7 @@ def parseTCPTail(stringToParse, theUsername):
 
         try:
             resultLine2 = theLine2.parseString(stringToParse)
-        except Exception, e:
+        except Exception as e:
             logger.debug('parseTCPTail(stringToParse): Exception - %s' % e)
         else:
             logger.debug('parseTCPTail() match rule 2 - Failed password')
@@ -415,7 +415,7 @@ def parseTCPTail(stringToParse, theUsername):
             parseObjectLOGANALYZED = { 'username': str(theUsername), 'logon': str(theUser), 'ip_addr': theIP, 'port': thePort, 'service': theService, 'auth_failure': 1, 'datetime': theDateTime }
             return([parseObjectLOGANALYZED])
 
-    except Exception, e:
+    except Exception as e:
         logger.debug('parseTCPTail(stringToParse): Exception - %s' % e)
 
     return
@@ -442,7 +442,7 @@ def InsertTraceInDB():
             db.othsec.bulk_insert([ListObjects[0]])
             InsertLocalizedInfoInDB(ListObjects[1])
             InsertLocalizedInfoInDB(ListObjects[2])
-        except Exception, e:
+        except Exception as e:
             logger.debug('InsertTraceInDB(): Exception - %s' % e)
             logger.debug('InsertTraceInDB(IPoth): anobject0 = ' + str(ListObjects[0]))
             logger.debug('InsertTraceInDB(IPFrom): anobject1 = ' + str(ListObjects[1]))
@@ -477,7 +477,7 @@ def InsertLogInDB():
             ListObjects = parseTCPTail(myParam, theUsername)
             logger.debug('InsertLogInDB(): anobject = ' + str(ListObjects[0]))
             InsertLocalizedInfoInDBLog(ListObjects[0])
-        except Exception, e:
+        except Exception as e:
             logger.debug('InsertLogInDB(): Exception - %s' % e)
             logger.debug('InsertLogInDB(IPoth): Exception - anobject0 = ' + str(ListObjects[0]))
         else:
@@ -509,7 +509,7 @@ def InsertSnifInDB():
             db.othsec.bulk_insert([ListObjects[0]])
             InsertLocalizedInfoInDB(ListObjects[1])
             InsertLocalizedInfoInDB(ListObjects[2])
-        except Exception, e:
+        except Exception as e:
             logger.debug('InsertSnifInDB(): Exception - %s' % e)
             if (ListObjects[0]): logger.debug('InsertSnifInDB(IPoth): Exception - anobject0 = ' + str(ListObjects[0]))
             else: logger.debug('InsertSnifInDB(IPoth): anobject0 = EMPTY')

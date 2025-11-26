@@ -1,0 +1,3 @@
+[bandit]
+exclude_dirs = /web2py/gluon,/web2py/examples
+skips = B101,B601

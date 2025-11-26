@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - WEB2PY_PASSWORD=SecurePassword123!
+      - DATABASE_URL=postgresql://beewoo:beewoo@db:5432/beewoo
+    depends_on:
+      - db
+    volumes:
+      - ./web2py/applications/TrackR:/opt/web2py/applications/TrackR
+    networks:
+      - beewoo-network
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=beewoo
+      - POSTGRES_USER=beewoo
+      - POSTGRES_PASSWORD=beewoo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - beewoo-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - beewoo-network
+
+volumes:
+  postgres_data:
+
+networks:
+  beewoo-network:
+    driver: bridge
