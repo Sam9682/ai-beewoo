@@ -4,17 +4,17 @@ services:
   web:
     build: .
     ports:
-      - "8080:8080"
+      - "${HTTP_PORT:-6000}:8080"
     environment:
       - WEB2PY_PASSWORD=SecurePassword123!
-      - DATABASE_URL=postgresql://beewoo:beewoo@db:5432/beewoo
+      - DATABASE_URL=postgresql://beewoo:beewoo@db:${HTTP_PORT2:-6001}/beewoo
     depends_on:
       - db
     volumes:
       - ./web2py/applications/TrackR:/opt/web2py/applications/TrackR
     networks:
       - beewoo-network
-
+    container_name: ai-beewoo-app-${USER_ID:-0}-${HTTPS_PORT:-6000}
   db:
     image: postgres:15-alpine
     environment:
@@ -24,7 +24,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "${HTTP_PORT2:-6001}:5432"
     networks:
       - beewoo-network
 
