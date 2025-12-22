@@ -1,0 +1,111 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Web2py
+web2py/applications/*/databases/
+web2py/applications/*/sessions/
+web2py/applications/*/errors/
+web2py/applications/*/cache/
+web2py/applications/*/uploads/
+web2py/logs/
+web2py/deposit/
+web2py/httpserver.log
+web2py/parameters_*.py
+
+# C/C++ builds
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.vcxproj.user
+*.sln.docstates
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+pgdata/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Security & Config
+*.key
+*.pem
+*.crt
+*.p12
+config.ini
+appconfig.ini
+.env.local
+.env.production
+ssl/*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Network captures
+*.pcap
+*.cap
